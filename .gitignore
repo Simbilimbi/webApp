@@ -1,0 +1,14 @@
+node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.env
+.output/
+.output
+dist
+public/excel
+prisma/migrations
+prisma/ERD.svg
+public/deleted
+.output/
