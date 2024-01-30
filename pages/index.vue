@@ -1,6 +1,6 @@
 <template>
     <NuxtLayout name="dashboard">
-       
+       <div>Simbi</div>
         
     </NuxtLayout>
   </template>

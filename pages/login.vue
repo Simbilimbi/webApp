@@ -2,8 +2,8 @@
     <NuxtLayout name="authentication">
         <div class="block-content">
             <div class="surface-card shadow-2 border-round  lg:w-6 w-full lg:w-6 p-4 lg:p-7">
-                <div class="text-center mb-5"> <img src alt="Image" height="50" class="mb-3">
-                    <div class="text-900 text-3xl font-medium mb-3">/div>
+                <div class="text-center mb-5"> <img  alt="Image" height="50" class="mb-3">
+                    <div class="text-900 text-3xl font-medium mb-3">
                 </div>
                 <div> <label for="email1" class="block text-900 font-medium mb-2">Email</label> 
                     <input class="p-inputtext p-component w-full mb-3" id="email1" v-model="email" type="text" placeholder="Email address"> 
@@ -34,9 +34,7 @@
     import { storeToRefs } from "pinia";
     import { useAuthStore } from "~/stores/auth";
 
-    definePageMeta({
-        middleware: ["not-auth"]
-    });
+   
 
     const toast = useToast();
     const authStore = useAuthStore()
