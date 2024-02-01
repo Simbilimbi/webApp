@@ -9,7 +9,40 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
+  id    String     @id @default(cuid())
   email String  @unique
-  name  String?
+  name  String
+  salt               String
+  password String
+  created_at          DateTime       @default(now())
+  dailyIntake DailyIntake[]
+
+}
+
+model FoodSource {
+  id  String @id @default(cuid())
+  name String
+  fats String
+  proteins  String
+  carbs  String
+  imageUrl    String?
+  dailyIntake DailyIntake[]
+}
+
+
+model DailyIntake {
+  id String @id @default(cuid())
+  user_id String
+  user User @relation(fields: [user_id],references: [id])
+  foodSource FoodSource[] 
+  macroOverview_id String
+  macroOverview MacroOverview @relation(fields: [macroOverview_id],references: [id])
+
+
+}
+
+model MacroOverview {
+  id String @id @default(cuid())
+  month DateTime @default(now())
+  dailyIntake DailyIntake[]
 }
