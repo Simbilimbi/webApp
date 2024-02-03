@@ -5,7 +5,7 @@
         <img width="180"  alt="logo" style="margin-top: 10%; margin-bottom: 5px;">
       </div>
       <nav  class="sidebar-nav">
-        <PanelMenu  :model="admin_menus" />
+        
         
       </nav>
       <div class="promo-box">
@@ -53,33 +53,33 @@
     })
   });
 
- const admin_menus = ref([
-            {
-                key: '1',
-                label: 'Admin Menu',
-                icon: 'pi pi-fw pi-cog',
-                items: [{
-                        key: '1_0',
-                        label: 'Register Users',
-                        icon: 'pi pi-fw pi-user-plus',
-                        to: '/admin/register'
-                    },
-                    {
-                        key: '1_1',
-                        label: 'Create Routing',
-                        icon: 'pi pi-fw pi-arrows-h',
-                        to: '/admin/createRouting'
-                    },
-                    {
-                        key: '1_2',
-                        label: 'Create Companies',
-                        icon: 'pi pi-fw pi-arrows-h',
-                        to: '/admin/createCompanies'
-                    }
-                ]
-            },
+//  const admin_menus = ref([
+//             {
+//                 key: '1',
+//                 label: 'Admin Menu',
+//                 icon: 'pi pi-fw pi-cog',
+//                 items: [{
+//                         key: '1_0',
+//                         label: 'Register Users',
+//                         icon: 'pi pi-fw pi-user-plus',
+//                         to: '/admin/register'
+//                     },
+//                     {
+//                         key: '1_1',
+//                         label: 'Create Routing',
+//                         icon: 'pi pi-fw pi-arrows-h',
+//                         to: '/admin/createRouting'
+//                     },
+//                     {
+//                         key: '1_2',
+//                         label: 'Create Companies',
+//                         icon: 'pi pi-fw pi-arrows-h',
+//                         to: '/admin/createCompanies'
+//                     }
+//                 ]
+//             },
            
-        ]);
+//         ]);
 
   
 
@@ -105,7 +105,7 @@
             });
 
         })();
-        console.log("admin_menus",admin_menus)
+      
   const logout = async () => {
   const result = await authStore.logout();
 

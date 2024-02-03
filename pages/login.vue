@@ -1,30 +1,46 @@
 <template>
     <NuxtLayout name="authentication">
         <div class="block-content">
-            <div class="surface-card shadow-2 border-round  lg:w-6 w-full lg:w-6 p-4 lg:p-7">
-                <div class="text-center mb-5"> <img  alt="Image" height="50" class="mb-3">
-                    <div class="text-900 text-3xl font-medium mb-3">
-                </div>
-                <div> <label for="email1" class="block text-900 font-medium mb-2">Email</label> 
-                    <input class="p-inputtext p-component w-full mb-3" id="email1" v-model="email" type="text" placeholder="Email address"> 
-                    <label for="password1" class="block text-900 font-medium mb-2">Password</label>
-                     <input class="p-inputtext p-component w-full mb-3" id="password1" type="password" v-model="password" placehoder="Password">
+            <div class="">
+                <div class="flex">
+                <div class="surface-section w-full md:w-6 p-6 md:p-8">
+                    <div class="mb-5">
+                    <img src="/images/blocks/logos/hyper.svg" alt="Image" height="50" class="mb-3">
+                    <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
+                    <span class="text-600 font-medium mr-2">Don't have an account?</span>
+                     <NuxtLink class="font-medium no-underline text-blue-500 cursor-pointer" to="/register">Create today!</NuxtLink>
+                    </div>
+                    <div>
+                    <label for="email2" class="block text-900 font-medium mb-2">Email</label>
+                    <input class="p-inputtext p-component w-full mb-3 p-3" data-pc-name="inputtext" data-pc-section="root" id="email2" type="text" placeholder="Email address">
+                    <label for="password2" class="block text-900 font-medium mb-2">Password</label>
+                    <input class="p-inputtext p-component w-full mb-3 p-3" data-pc-name="inputtext" data-pc-section="root" id="password2" type="password" placeholder="Password">
                     <div class="flex align-items-center justify-content-between mb-6">
                         <div class="flex align-items-center">
-                            <div class="p-checkbox p-component mr-2" id="rememberme1">
-                                <div class="p-hidden-accessible"> <input type="checkbox"> </div>
-                                <div class="p-checkbox-box">
-                                    <!---->
-                                </div>
-                            </div> <label for="rememberme1">Remember me</label>
-                        </div> <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
-                    </div> <button class="p-button p-component w-full" type="button" aria-label="Sign In" @click="login"> <span class="p-button-icon p-button-icon-left pi pi-user"></span> <span class="p-button-label">Sign In</span>
-                        <!----> <span class="p-ink" role="presentation" aria-hidden="true"></span>
+                        <div class="p-checkbox p-component mr-2" data-pc-name="checkbox" data-pc-section="root" id="rememberme2">
+                            <div class="p-hidden-accessible" data-pc-section="hiddeninputwrapper" data-p-hidden-accessible="true">
+                            <input type="checkbox" data-pc-section="hiddeninput">
+                            </div>
+                            <div class="p-checkbox-box" data-pc-section="input" data-p-highlight="false" data-p-disabled="false" data-p-focused="false">
+                            <!---->
+                            </div>
+                        </div>
+                        <label for="rememberme2">Remember me</label>
+                        </div>
+                        <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
+                    </div>
+                    <button class="p-button p-component w-full p-3" type="button" aria-label="Sign In" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
+                        <span class="p-button-icon p-button-icon-left pi pi-user" data-pc-section="icon"></span>
+                        <span class="p-button-label" data-pc-section="label">Sign In</span>
+                        <!---->
+                        <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
                     </button>
+                    </div>
+                </div>
+                <div class="hidden md:block w-6 bg-no-repeat bg-cover" style="background-image: url(/images/food.png);"></div>
                 </div>
             </div>
-            <!---->
-            </div>
+        <!---->
         </div>
     </NuxtLayout>
 </template>
@@ -72,13 +88,7 @@
 </script>
 
 <style>
-    .content-wrapper.d-flex.align-items-center.auth.px-0 {
-        /* background-color: red; */
-        background-position: bottom;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-image: url(/images/signin-2.jpg);
-    }
+ 
     .auth .brand-logo {
         margin-bottom: 2rem;
         text-align: center;
@@ -102,9 +112,9 @@
     button.p-button.p-component.bg-primary.btn.btn-bg.text-white {
         width: 100%;
         height: 50px;
-        background-color: #141414 !important;
+    
     }
     button.p-button.p-component.w-full {
-    background-color: black;
+    
     }
 </style>

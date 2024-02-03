@@ -1,15 +1,10 @@
 <template>
-    <NuxtLayout name="dashboard">
-       <div>Simbi</div>
-        
-    </NuxtLayout>
+    
   </template>
   
   <script setup lang="ts">
    
-    definePageMeta({ 
-        middleware: ["not-auth"]
-    });
+  
 
    
   
