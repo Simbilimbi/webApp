@@ -15,7 +15,7 @@
     <!-- ======== main-wrapper start =========== -->
     <main class="main-wrapper">
         <!-- ========== header start ========== -->
-        <DashboardHeader/>
+        
         <!-- ========== header end ========== -->
     
         <!-- ========== section start ========== -->

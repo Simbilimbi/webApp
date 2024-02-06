@@ -37,7 +37,7 @@
                     </button>
                     </div>
                 </div>
-                <div class="hidden md:block w-6 bg-no-repeat bg-cover" style="background-image: url(/images/food.png);"></div>
+                <div class="hidden md:block w-6 bg-no-repeat bg-cover" style="background-image: url(/images/meal3.svg);"></div>
                 </div>
             </div>
         <!---->
@@ -51,7 +51,9 @@
     import { useAuthStore } from "~/stores/auth";
 
    
-
+    definePageMeta({ 
+        middleware: ["not-auth"]
+    });
     const toast = useToast();
     const authStore = useAuthStore()
     const email = storeToRefs(authStore).login_email

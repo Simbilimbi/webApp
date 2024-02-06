@@ -2,16 +2,18 @@
   <div>
     <aside class="sidebar-nav-wrapper">
       <div @click="goToHome()" class="navbar-logo">
-        <img width="180"  alt="logo" style="margin-top: 10%; margin-bottom: 5px;">
+        <img width="180" src="/images/logo.png" alt="logo" style="margin-top: 10%; margin-bottom: 5px;">
       </div>
       <nav  class="sidebar-nav">
-        
-        
+       
+        <PanelMenu   :model="admin_menus"/>
+        <PanelMenu :model="insurer_menus"/>
+        <hr>
+        <PanelMenu :model="assesor_menus"/>
+      
       </nav>
-      <div class="promo-box">
-        <h3>OACEY</h3>
-        <p>{{currentYear()}}</p>
-      </div>
+      
+      
     </aside>
     <div class="overlay"></div>
   </div>
@@ -32,7 +34,6 @@
     const id = storeToRefs(authStore).id
     const id2 = ref(authStore.id)
     const role = ref<string>();
-    console.log("hb",role.value,id.value,id2.value)
 
   const goToHome =async () => {
 
@@ -48,50 +49,144 @@
   onMounted(async ()=>    {
     
     let result = authStore.me().then((data)=> {
-      console.log(data)
       id.value = data?.user?.id
     })
   });
 
-//  const admin_menus = ref([
-//             {
-//                 key: '1',
-//                 label: 'Admin Menu',
-//                 icon: 'pi pi-fw pi-cog',
-//                 items: [{
-//                         key: '1_0',
-//                         label: 'Register Users',
-//                         icon: 'pi pi-fw pi-user-plus',
-//                         to: '/admin/register'
-//                     },
-//                     {
-//                         key: '1_1',
-//                         label: 'Create Routing',
-//                         icon: 'pi pi-fw pi-arrows-h',
-//                         to: '/admin/createRouting'
-//                     },
-//                     {
-//                         key: '1_2',
-//                         label: 'Create Companies',
-//                         icon: 'pi pi-fw pi-arrows-h',
-//                         to: '/admin/createCompanies'
-//                     }
-//                 ]
-//             },
+
+  const admin_menus = ref([
+            {
+                key: '1',
+                label: 'Food Items',
+                icon:  'pi pi-reddit',
+                to:'/admin/register',
+                
+            },
            
-//         ]);
+        ]);
+        const insurer_menus = ref([
+            {
+                key: '2',
+                label: 'Todays Nutrients',
+                icon: 'pi pi-fw pi-sun',
+                to:'/admin/register'
+            },
+           
+        ]);
+        const assesor_menus = ref([
+            {
+                key: '1',
+                label: 'Macro Overview',
+                icon: 'pi pi-fw pi-chart-bar',
+                to:"/admin/register"
+               
+            },
+           
+        ]);
 
-  
-
-  
- 
- ;
+  const officer_menus = ref([
+      {
+          key: '1',
+          label: 'Originator Menu',
+          icon: 'pi pi-fw pi-align-justify',
+          items: [{
+                  key: '1_0',
+                  label: 'Report Generation',
+                  icon: 'pi pi-fw pi-chart-pie',
+                  to: '/officer/generate'
+              },
+              {
+                  key: '1_1',
+                  label: 'My Reports',
+                  icon: 'pi pi-fw pi-clone',
+                  to: '/officer/reports'
+              }
+          ]
+      },
+      
+  ]);
+  const bank_menus = ref([
+      {
+          key: '1',
+          label: 'Bank File Generation',
+          icon: 'pi pi-fw pi-qrcode',
+          items: [{
+                  key: '1_0',
+                  label: 'File Generation',
+                  icon: 'pi pi-fw pi-chart-pie',
+                  to: '/officer/bank_file_generation'
+              }
+          ]
+      },
+      
+  ]);
+  const approval_menus = ref([
+      {
+          key: '1',
+          label: 'Approver Menu',
+          icon: 'pi pi-fw pi-align-justify',
+          items: [{
+                  key: '1_0',
+                  label: 'Pending Approvals',
+                  icon: 'pi pi-fw pi-chart-pie',
+                  to: '/approvals/pending'
+              }
+          ]
+      },
+      
+  ]);
+  const recruitment_menus = ref([
+      {
+          key: '1',
+          label: 'E-recruitment',
+          icon: 'pi pi-fw pi-align-justify',
+          items: [{
+                  key: '1_0',
+                  label: 'Dashboard',
+                  icon: 'pi pi-fw pi-chart-pie',
+                  to: '/e-recruitment/dashboard'
+              },
+              {
+                  key: '1_1',
+                  label: 'Openings List',
+                  icon: 'pi pi-fw pi-chart-pie',
+                  to: '/e-recruitment/openings'
+              }
+          ]
+      },
+      
+  ]);
+  const applicant_menus = ref([
+      {
+          key: '1',
+          label: 'E-CLAIMS',
+          icon: 'pi pi-fw pi-bookmark-fill',
+          items: [{
+                  key: '1_0',
+                  label: 'Claim Initiation',
+                  icon: 'pi pi-fw pi-file',
+                  to: '/client/claimInitiation'
+              },
+              {
+                  key: '1_1',
+                  label: 'My Claims',
+                  icon: 'pi pi-fw pi-briefcase',
+                  to: '/client/claims'
+              },
+              {
+                  key: '1_2',
+                  label: 'My Profile',
+                  icon: 'pi pi-fw pi-user',
+                  to: '/client/profile'
+              }
+          ]
+      },
+      
+  ]);
   
        
         (async ()=>{
         let userData:any = await authStore.me().then(userData =>{
-            console.log("myuser data"),
-            console.log("my userData object",userData)
             let myArray2 = []
             if (userData && userData.user && userData.user.company_access && userData.user.company_access[0] && userData.user.company_access[0].access_list && userData.user.company_access[0].access_list.length > 0) 
                 {
@@ -105,7 +200,6 @@
             });
 
         })();
-      
   const logout = async () => {
   const result = await authStore.logout();
 
