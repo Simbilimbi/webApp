@@ -3,100 +3,44 @@
     <section class="section">
             <div class="container-fluid pt-5">
                 <div class="row">
-                    <div class="text-900 font-medium text-xl mb-3">Create Users</div>
+                    <div class="text-900 font-medium text-xl mb-3">Add Food</div>
                     <div class="surface-card p-4 shadow-2 border-round p-fluid">
                         <div class="grid formgrid p-fluid">
-                          
-                           
-                          
                             <div class="field mb-4 col-12 md:col-6">
-                                <Button @click="addLineItem = true" label="Create User" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto" outlined />
-                            </div>
-                            <div class="field mb-4 col-12 md:col-12"> 
-                                <label for="customer_name" class="font-medium text-900">Current Users</label> 
-                                <DataTable :value="users" showGridlines tableStyle="min-width: 50rem">
-                                    <Column field="price" header="Full Name">
-                                        <template #body="slotProps">
-                                            {{slotProps.data?.name}} {{slotProps.data?.surname}}
-                                        </template>
-                                    </Column>
-                                    <Column field="rating" header="Email Address">
-                                        <template #body="slotProps">
-                                            {{slotProps.data?.email}}
-                                        </template>
-                                    </Column>
-                                    <Column field="rating" header="Profile Type">
-                                        <template #body="slotProps">
-                                            {{slotProps.data?.profile }}
-                                        </template>
-                                    </Column>
-                                    <Column header="Actions">
-                                        <template #body="slotProps">
-                                            <Button  icon="pi pi-trash" outlined rounded class="mr-2"/>
-                                        </template>
-                                    </Column>
-                                </DataTable>
+                                <Button @click="addLineItem = true" label="Add Food Item" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto" outlined />
                             </div>
                            </div> 
-                    
                     </div>
                 </div>
             </div>
         </section>
-       <Dialog v-model:visible="addLineItem" maximizable modal header="Create User" position="top" :style="{ width: '75vw' }">
+       <Dialog v-model:visible="addLineItem" maximizable modal header="Add Food" position="center" :style="{ width: '55vw' }">
                         <div class="grid formgrid p-fluid">
                             <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="first_name" class="font-medium text-900">First name</label> 
-                                <input class="p-inputtext p-component" id="first_name" v-model="name" type="text">
+                                <label for="first_name" class="font-medium text-900">Food name</label> 
+                                <input class="p-inputtext p-component" id="first_name" v-model="food_name" type="text">
                              </div>
                             <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="surname" class="font-medium text-900">Surname</label> 
-                                <input class="p-inputtext p-component" v-model="surname" id="surname" type="text"> 
+                                <label for="surname" class="font-medium text-900">Fats in grams</label> 
+                                <input class="p-inputtext p-component" v-model="fat_amount" id="surname" type="text"> 
                             </div>
                             <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="username" class="font-medium text-900">Username</label> 
-                                <input class="p-inputtext p-component" v-model="username" id="username" type="text"> 
+                                <label for="username" class="font-medium text-900">Proteins in grams</label> 
+                                <input class="p-inputtext p-component" v-model="protein_amount" id="username" type="text"> 
                             </div>
                             <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="user_email" class="font-medium text-900">Email</label> 
-                                <input class="p-inputtext p-component" v-model="email" id="user_email" type="text"> 
+                                <label for="user_email" class="font-medium text-900">Carbs in grams</label> 
+                                <input class="p-inputtext p-component" v-model="carbs_amount" id="user_email" type="text"> 
                             </div>
+                            
                             <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="title" class="font-medium text-900">Title</label> 
-                                <DropDown v-model="title" :options="title_options"   placeholder="Select  Title"  /> 
+                                <label for="age" class="font-medium text-900">Food Image</label> 
+                                <input class="p-inputtext"  id="age" type="text"> 
                             </div>
-                            <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="age" class="font-medium text-900">Age</label> 
-                                <input class="p-inputtext p-component" v-model="age" id="age" type="number"> 
-                            </div>
-                            <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="phone" class="font-medium text-900">Phone number</label> 
-                                <input class="p-inputtext p-component" v-model="phone" id="phone" type="text"> 
-                            </div>
-                            <div class="field mb-4 col-12 md:col-6">
-                              <label for="phone" class="font-medium text-900">Gender</label> 
-                              <DropDown v-model="gender" :options="gender1"   placeholder="Select  Gender"  />
-                            </div>
-                            <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="password" class="font-medium text-900">Password</label> 
-                                <input class="p-inputtext p-component" v-model="password" id="password" type="text"> 
-                            </div>
-                            <div class="field mb-4 col-12 md:col-6">
-                              <label for="phone" class="font-medium text-900">User Type</label> 
-                              <DropDown  v-model="accountTypes" :options="user_type"  placeholder="Select a user type"  />
-                            </div>
-                            <!-- <div v-if="accountTypes === 'NORMAL'" class="field mb-4 col-12 md:col-6">
-                              <label for="phone" class="font-medium text-900">Cost Center</label>
-                              <DropDown @change="selectCommodityCodes(selected_center)"  v-model="selected_center" :options="cost_centers" optionValue="id" optionLabel="center_code"  placeholder="Select Cost Center"  />
-                            </div> -->
-                            <!-- <div v-if="accountTypes === 'NORMAL'" class="field mb-4 col-12 md:col-6">
-                              <label for="phone" class="font-medium text-900">Commodity Access</label> 
-                              <MultiSelect v-model="selectedCommodities" :options="commodities" optionValue="code" optionLabel="code" placeholder="Select Commodities"  :maxSelectedLabels="3" class="w-full md:w-20rem" />
-                            </div> -->
                             </div>
                             <div class="surface-border border-top-1 opacity-50 mb-4 col-12"></div>
                           
-                           <button class="p-button p-component w-auto" type="button" aria-label="Create Invoice" @click="register()"> <span class="p-button-icon p-button-icon-left pi pi-file"></span> <span class="p-button-label">Create User</span>
+                           <button class="p-button p-component w-auto" type="button" aria-label="Add Food" @click="register()"> <span class="p-button-icon p-button-icon-left pi pi-file"></span> <span class="p-button-label">Add Food</span>
                               <span class="p-ink" role="presentation" aria-hidden="true"></span>
                            </button>
         </Dialog>
@@ -120,7 +64,12 @@
 // const user_type = ref(["ADMIN","HR_OFFICER","HR_MANAGER","HR_DIRECTOR","FINANCE"])
 // const title_options = ref(["Mr","Mrs","Ms"])
 // const adminStore = useAdminStore()
-// const addLineItem = ref(false)
+const addLineItem = ref(false)
+const food_name = ref()
+const fat_amount = ref()
+const protein_amount = ref()
+const carbs_amount = ref()
+const food_image = ref
 // const users = storeToRefs(adminStore).users
 // const name = storeToRefs(adminStore).name
 // const surname = storeToRefs(adminStore).surname

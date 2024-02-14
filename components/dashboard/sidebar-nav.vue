@@ -69,7 +69,7 @@
                 key: '2',
                 label: 'Todays Nutrients',
                 icon: 'pi pi-fw pi-sun',
-                to:'/admin/register'
+                to:'/dailyIntake'
             },
            
         ]);
@@ -78,7 +78,7 @@
                 key: '1',
                 label: 'Macro Overview',
                 icon: 'pi pi-fw pi-chart-bar',
-                to:"/admin/register"
+                to:"/macroOverview"
                
             },
            
