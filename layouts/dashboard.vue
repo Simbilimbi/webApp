@@ -17,7 +17,7 @@
         <!-- ========== header start ========== -->
         
         <!-- ========== header end ========== -->
-    
+        <DashboardHeader/>
         <!-- ========== section start ========== -->
         <slot/>
 

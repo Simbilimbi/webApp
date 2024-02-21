@@ -40,7 +40,7 @@
                             </div>
                             <div class="surface-border border-top-1 opacity-50 mb-4 col-12"></div>
                           
-                           <button class="p-button p-component w-auto" type="button" aria-label="Add Food" @click="register()"> <span class="p-button-icon p-button-icon-left pi pi-file"></span> <span class="p-button-label">Add Food</span>
+                           <button class="p-button p-component w-auto" type="button" aria-label="Add Food" @click="addFood()"> <span class="p-button-icon p-button-icon-left pi pi-file"></span> <span class="p-button-label">Add Food</span>
                               <span class="p-ink" role="presentation" aria-hidden="true"></span>
                            </button>
         </Dialog>
@@ -48,72 +48,63 @@
  </template>
  
  <script setup lang="ts">
-//    import { useToast } from "primevue/usetoast";
-//    import { storeToRefs } from "pinia";
-//   //  import {useAdminStore} from "~/stores/admin"
-//    import moment from "moment";
-
+    import { useToast } from "primevue/usetoast";
+    import { storeToRefs } from "pinia";
+    import {useUserStore} from "~/stores/user"
+    import moment from "moment";
+    import Swal from "sweetalert2"
    
  
-//    // definePageMeta({ 
-//    //     middleware: ["auth"]
-//    // });
-// const toast = useToast();
-// const selectGender = ref()
-// const gender1 = ref(["FEMALE","MALE"]);
-// const user_type = ref(["ADMIN","HR_OFFICER","HR_MANAGER","HR_DIRECTOR","FINANCE"])
-// const title_options = ref(["Mr","Mrs","Ms"])
-// const adminStore = useAdminStore()
+   definePageMeta({ 
+       middleware: ["auth"]
+   });
+const toast = useToast();
+const userStore = useUserStore()
+
 const addLineItem = ref(false)
 const food_name = ref()
 const fat_amount = ref()
 const protein_amount = ref()
 const carbs_amount = ref()
-const food_image = ref
-// const users = storeToRefs(adminStore).users
-// const name = storeToRefs(adminStore).name
-// const surname = storeToRefs(adminStore).surname
-// const username = storeToRefs(adminStore).username
-// const email = storeToRefs(adminStore).email
-// const phone = storeToRefs(adminStore).phone
-// const gender = storeToRefs(adminStore).gender
-// const title = storeToRefs(adminStore).title
-// const age = storeToRefs(adminStore).age
-// const accountTypes = storeToRefs(adminStore).profile
-// const password = storeToRefs(adminStore).password
-// const cost_centers = storeToRefs(adminStore).centers
-// const selected_center = storeToRefs(adminStore).selected_center
-// const commodities = storeToRefs(adminStore).cost_commodities
-// const selectedCommodities = storeToRefs(adminStore).selectedCommodities
+const food_image = ref()
 
-// onMounted( async () => {
-//   let cost_centers = await adminStore.getAllCost()
-//   let users  = await adminStore.getAllUsers()
-// })
-// const register = async () =>{
+const resetFood = ()=>{
+  fat_amount.value = null
+  food_name.value =null
+  protein_amount.value = null
+  carbs_amount.value = null
+  food_image.value = null
+}
 
-// let result = await adminStore.registerUser();
-// console.log ("my result")
-// console.log(result.data)
-// console.log(result.data.success)
-// if(result.data.success){
-//        addLineItem.value = false
-//        toast.add({severity:'success', summary: 'You are registered', detail:'You will be notified once your account is activated', life: 3000});
-//       //  navigateTo('/login')
+const addFood = async ()=>{
+    let message = {
+        name: food_name.value,
+        fats: fat_amount.value ,
+        proteins : protein_amount.value ,
+        carbs: carbs_amount.value,
+        imageUrl: food_image.value
+    }
 
-//     }
-//     else{
+    let result = await userStore.addFood(message)
+    console.log('result',result)
+    if (result.data.success) {
+        
+                      
+        Swal.fire({
+        icon: 'success',
+        title: ' Food Successfully Added',
+        timer: 4000})
+        resetFood()
+        addLineItem.value = false
+    }
+   
+    else {
+        toast.add({severity:'warn', summary: 'Failed', detail:'Creation Failed', life: 3000});
+    }
 
-//         toast.add({severity:'warn', summary: 'Error!', detail:result.data.message, life: 3000});
-      
-//     }
-// } 
+    
+}
 
-// const selectCommodityCodes = async (value) => {
-//   selectedCommodities.value = null
-//   let result = await adminStore.getManySelectedCommodities(value)
-
-// }
  
   
  

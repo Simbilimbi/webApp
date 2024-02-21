@@ -65,11 +65,9 @@ export default defineEventHandler(async (event)=>{
          //Store encrpted user daa in cookie
          let filteredUserData = {
             id: userData.id,
-            first_name: userData.name,
-            last_name: userData.surname,
-            username: userData.username,
-            email: userData.email,
-            profile: userData.profile,
+            name: userData.name,
+            surname: userData.surname,
+         
           };
          // setCookie(event, "user", JSON.stringify(userData));
          setCookie(event, "user", JSON.stringify(filteredUserData));

@@ -21,7 +21,7 @@
            
             <div class="col-4 splitbutton">
                
-                <SplitButton :label="`${full_name()} (${account_type})`" icon="pi pi-user" :model="user_info"></SplitButton>
+                <SplitButton :label="`${full_name()}`" icon="pi pi-user" :model="user_info"></SplitButton>
                 
             </div>
           </div>
@@ -85,7 +85,8 @@ const time = storeToRefs(authStore).time;
 const full_date = () => date.value
 const full_time = () => time.value
 const password = storeToRefs(authStore).password
-const full_name = () => authStore.userData.first_name + "  " + authStore.userData.last_name
+console.log('simba',authStore.userData)
+const full_name = () => authStore.userData.name + "  " + authStore.userData.surname
 const account_type = authStore.userData.profile
 const passwordChange = ref(false);
 const confirm_password = storeToRefs(authStore).confirm_password

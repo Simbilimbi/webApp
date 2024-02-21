@@ -8,7 +8,7 @@ export default defineEventHandler(async (event)=>{
     const response = {};
     
 
-    const { email, username, name ,profile, surname,selected_center,selectedCommodities , phone, age, password, gender, title, accountTypes, account_status} = await readBody(event);
+    const { data:{email,name ,surname, phone, password, current_logged_in_at,last_logged_in_at} } = await readBody(event);
      
     const isAlreadyRegistered = await prisma.user.findUnique({
         where: {
@@ -32,21 +32,17 @@ export default defineEventHandler(async (event)=>{
             data: {
                 name: name,
                 surname: surname,
-                username: username,
                 phone: phone,
                 email: email,
-                profile: profile,
-                gender: gender,
                 password: hash,
-                account_status: account_status,
-                title: title,
-                age: age,
                 salt: salt,
                 current_logged_in_at: new Date(),
                 last_logged_in_at: new Date()
+        
+                
             }
         });
-        response['registred'] = createUser
+        response['registered'] = createUser
         response['success'] = true
 
   

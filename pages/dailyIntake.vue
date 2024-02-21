@@ -1,21 +1,108 @@
 <template>
     <NuxtLayout name="dashboard">
         <section class="section">
-          <div class="container-fluid pt-100">
-             <div class="text-600 font-medium text-xl mb-3">Today Macro % </div>
-             <div cclass="card p-4 mb-10 shadow-2 border-round p-fluid flex justify-content-center">
-                <Chart type="bar" :data="chartData" :options="chartOptions" />
+            <div class="container-fluid pt-5">
+                <div class="surface-card p-4 shadow-2 border-round">
+                    <div class="font-medium text-3xl text-900 mb-3">Applicant Profile</div>
+                    <div class="text-500 mb-5">Egestas sed tempus urna et pharetra pharetra massa massa ultricies.</div>
+                    <ul class="list-none p-0 m-0 border-top-1 border-300">
+                      <li class="flex align-items-center py-3 px-2 flex-wrap surface-ground">
+                        <div class="text-500 w-full md:w-2 font-medium">Calories Remaining</div>
+                        <div class="text-900 w-full md:w-10">2 300 - 0 =  2 300</div>
+                      </li>
+                      <li class="flex align-items-center py-3 px-2 flex-wrap surface-ground">
+                        <div class="text-500 w-full md:w-2 font-medium">Meals</div>
+                        <div class="text-900 w-full md:w-10">
+                          <div class="grid mt-0 mr-0">
+                            <div class="col-12 md:col-6">
+                              <div class="p-3 border-1 surface-border border-round surface-card">
+                                <div class="text-900 mb-2">
+                                  <i class="pi pi-github mr-2"></i>
+                                  <span class="font-medium" style="display: flex; justify-content: space-between;">
+                                    <span>Breakfast</span>
+                                    <span>{{ 0 }}</span>
+                                  </span>
+                                </div>
+                                <div class="text-700" >
+                                  <Button label="Add Food" @click="visible=true" severity="help" outlined />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                              <div class="p-3 border-1 surface-border border-round surface-card">
+                                <div class="text-900 mb-2">
+                                  <i class="pi pi-github mr-2"></i>
+                                  <span class="font-medium" style="display: flex; justify-content: space-between;">
+                                    <span>Lunch</span>
+                                    <span>{{ 0 }}</span>
+                                  </span>
+                                </div>
+                                <div class="text-700">
+                                  <Button label="Add Food" @click="visible=true" severity="help" outlined />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                              <div class="p-3 border-1 surface-border border-round surface-card">
+                                <div class="text-900 mb-2">
+                                  <i class="pi pi-github mr-2"></i>
+                                  <span class="font-medium" style="display: flex; justify-content: space-between;">
+                                    <span>Dinner</span>
+                                    <span>{{ 0 }}</span>
+                                  </span>
+                                </div>
+                                <div class="text-700">
+                                  <Button label="Add Food" @click="visible=true" severity="help" outlined />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 md:col-6">
+                              <div class="p-3 border-1 surface-border border-round surface-card">
+                                <div class="text-900 mb-2">
+                                  <i class="pi pi-github mr-2"></i>
+                                  <span class="font-medium" style="display: flex; justify-content: space-between;">
+                                    <span>Snacks</span>
+                                    <span>{{ 0 }}</span>
+                                  </span>
+                                </div>
+                                <div class="text-700">
+                                  <Button label="Add Food" @click="visible=true" severity="help" outlined />
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </li>
+                      <li class="flex align-items-center py-3 px-2 flex-wrap">
+                          <div class="text-500 w-full md:w-2 font-medium">Complete Day Log</div>
+                          <div class="text-900 w-full md:w-10">
+                            <Button label="Submit" severity="secondary" text />
+                            
+                          </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div >
-                <Chip label="Today's Calories" />
-                <Chip label="2334" style="margin-left: 7px;" />
-            </div>
-          </div> 
+            <Dialog v-model:visible="visible" modal header="Calorie and Macro Goal" :style="{ width: '25rem' }">
+                          <span class="p-text-secondary block mb-5">Update your information.</span>
+                          <div class="align-items-center gap-3 mb-3">
+                              <label for="username" class="font-semibold w-6rem">Calories</label>
+                              <InputText id="username" class="" autocomplete="off" />
+                          </div>
+                          
+                          <div class="flex justify-content-end gap-2">
+                              <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
+                              <Button type="button" label="Save" @click="visible = false"></Button>
+                          </div>
+                </Dialog>
          </section>
     </NuxtLayout>
   </template>
   
   <script setup lang="ts">
+
+  const visible= ref(false)
 
 onMounted(() => {
     chartData.value = setChartData();

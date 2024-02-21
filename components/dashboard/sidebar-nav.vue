@@ -67,7 +67,7 @@
         const insurer_menus = ref([
             {
                 key: '2',
-                label: 'Todays Nutrients',
+                label: 'Diary',
                 icon: 'pi pi-fw pi-sun',
                 to:'/dailyIntake'
             },
