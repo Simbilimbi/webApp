@@ -51,7 +51,7 @@
                               <!---->
                             </div>
                             <div class="mt-1">
-                              <Button label="Create User"/>
+                              <Button label="Create User" @click="createUser()"/>
                             </div>
                             <div class="text-center fw-light"> Already have an account? <a href="/login" class="text-primary text-decoration-none">Login</a>
                             </div>

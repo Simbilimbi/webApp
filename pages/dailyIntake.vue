@@ -3,7 +3,7 @@
         <section class="section">
             <div class="container-fluid pt-5">
                 <div class="surface-card p-4 shadow-2 border-round">
-                    <div class="font-medium text-3xl text-900 mb-3">Applicant Profile</div>
+                    <div class="font-medium text-3xl text-900 mb-3">Today's Meals</div>
                     <div class="text-500 mb-5">Egestas sed tempus urna et pharetra pharetra massa massa ultricies.</div>
                     <ul class="list-none p-0 m-0 border-top-1 border-300">
                       <li class="flex align-items-center py-3 px-2 flex-wrap surface-ground">
