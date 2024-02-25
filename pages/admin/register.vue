@@ -6,9 +6,16 @@
                     <div class="text-900 font-medium text-xl mb-3">Add Food</div>
                     <div class="surface-card p-4 shadow-2 border-round p-fluid">
                         <div class="grid formgrid p-fluid">
-                            <div class="field mb-4 col-12 md:col-6">
+                            <div class="field mb-4 col-12 md:col-4">
                                 <Button @click="addLineItem = true" label="Add Food Item" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto" outlined />
                             </div>
+                            <div class="field mb-4 col-12 md:col-4">
+                                <Button @click="visible = true" label="Create Meal" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto" outlined />
+                            </div>
+                            <div class="field mb-4 col-12 md:col-4">
+                                <Button @click="dialogue_goal = true" label="Set Goal" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto" outlined />
+                            </div>
+                            
                            </div> 
                     </div>
                 </div>
@@ -34,8 +41,8 @@
                             </div>
                             
                             <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="age" class="font-medium text-900">Food Image</label> 
-                                <input class="p-inputtext"  id="age" type="text"> 
+                                <label for="age" class="font-medium text-900">Description</label> 
+                                <input class="p-inputtext" v-model="description" id="age" type="text"> 
                             </div>
                             </div>
                             <div class="surface-border border-top-1 opacity-50 mb-4 col-12"></div>
@@ -44,11 +51,36 @@
                               <span class="p-ink" role="presentation" aria-hidden="true"></span>
                            </button>
         </Dialog>
+        <Dialog v-model:visible="visible" modal header="Create Meal" :style="{ width: '25rem' }">
+                        
+                          <div class="align-items-center gap-3 mb-3">
+                              <label for="username" class="font-semibold w-6rem">Meal</label>
+                              <DropDown class="w-full" id="username" v-model="selected_meal"  :options="meal_types" autocomplete="off" />
+                          </div>
+                          
+                          <div class="flex justify-content-end gap-2">
+                              <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
+                              <Button type="button" label="Create" @click="createMeal"></Button>
+                          </div>
+                </Dialog>
+                <Dialog v-model:visible="dialogue_goal" modal header="Calorie and Macro Goal" :style="{ width: '25rem' }">
+                  
+                          <div class="align-items-center gap-3 mb-3">
+                              <label for="username" class="font-semibold w-6rem">Calories</label>
+                              <InputText id="username" v-model="set_goal" class="" autocomplete="off" />
+                          </div>
+                          
+                          <div class="flex justify-content-end gap-2">
+                              <Button type="button" label="Cancel" severity="secondary" ></Button>
+                              <Button type="button" label="Save" @click="createGoal()"></Button>
+                          </div>
+                </Dialog>
    </NuxtLayout>
  </template>
  
  <script setup lang="ts">
     import { useToast } from "primevue/usetoast";
+    import { useAuthStore } from '@/stores/auth';
     import { storeToRefs } from "pinia";
     import {useUserStore} from "~/stores/user"
     import moment from "moment";
@@ -60,20 +92,66 @@
    });
 const toast = useToast();
 const userStore = useUserStore()
+const authStore = useAuthStore();
 
+const visible = ref(false)
 const addLineItem = ref(false)
+const dialogue_goal = ref(false)
 const food_name = ref()
 const fat_amount = ref()
 const protein_amount = ref()
 const carbs_amount = ref()
-const food_image = ref()
+const description = ref()
+const id = authStore.userData.id
+const set_goal= ref()
 
+const meal_types = ref(['BreakFast','Lunch','Dinner','Snacks'])
+const selected_meal = ref()
 const resetFood = ()=>{
   fat_amount.value = null
   food_name.value =null
   protein_amount.value = null
   carbs_amount.value = null
-  food_image.value = null
+  description.value = null
+}
+
+const createMeal =async ()=>{
+  let data = {
+    name: selected_meal.value,
+    user_id: id
+  }
+  let result = await userStore.createMeal(data)
+  console.log('result',result)
+  if (result.data.success){
+    visible.value = false   
+    toast.add({severity:'success', summary: 'Meal Created', detail:'You have Successfully created a meal', life: 3000});
+    selected_meal.value = null
+  }
+  else{
+    visible.value = false
+    toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
+    selected_meal.value = null
+
+  }
+}
+
+const createGoal = async () =>{
+  let message = {
+    user_id: id,
+    calories: set_goal.value
+  }
+  let result = await userStore.createGoal(message)
+  if (result.data.success){
+    dialogue_goal.value = false   
+    toast.add({severity:'success', summary: 'Goal Created', detail:'You have Successfully created a goal', life: 3000});
+    set_goal.value = null
+  }
+  else{
+    dialogue_goal.value = false
+    toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
+    set_goal.value = null
+
+  }
 }
 
 const addFood = async ()=>{
@@ -82,7 +160,7 @@ const addFood = async ()=>{
         fats: fat_amount.value ,
         proteins : protein_amount.value ,
         carbs: carbs_amount.value,
-        imageUrl: food_image.value
+        description: description.value
     }
 
     let result = await userStore.addFood(message)

@@ -19,34 +19,49 @@ model User {
   current_logged_in_at   DateTime
   last_logged_in_at      DateTime
   created_at          DateTime       @default(now())
-  dailyIntake DailyIntake[]
+  goal Goal?
+  meal Meal[]
 
 }
 
-model FoodSource {
+
+
+model Goal{ 
+  id  String @id @default(cuid())
+  calories String
+  
+  user User @relation(fields: [user_id],references: [id])
+  user_id  String @unique
+  created_at          DateTime       @default(now())
+
+}
+model Meal{
+  id String @id @default(cuid())
+  name Meals
+  isBreakFat Boolean @default(false)
+  isLunch Boolean @default(false)
+  isDinner Boolean @default(false)
+  isSnacks Boolean @default(false)
+  food Food[]
+  user User @relation(fields: [user_id],references: [id])
+  user_id String
+  created_at          DateTime       @default(now())
+}
+
+model Food{
   id  String @id @default(cuid())
   name String
-  fats String
-  proteins  String
+  description String
   carbs  String
-  imageUrl    String?
-  dailyIntake DailyIntake[]
+  proteins String
+  fats String
+  meal  Meal []
 }
 
-
-model DailyIntake {
-  id String @id @default(cuid())
-  user_id String
-  user User @relation(fields: [user_id],references: [id])
-  foodSource FoodSource[] 
-  macroOverview_id String
-  macroOverview MacroOverview @relation(fields: [macroOverview_id],references: [id])
-
-
+ enum Meals {
+  BreakFast
+  Lunch
+  Dinner
+  Snacks
 }
 
-model MacroOverview {
-  id String @id @default(cuid())
-  month DateTime @default(now())
-  dailyIntake DailyIntake[]
-}

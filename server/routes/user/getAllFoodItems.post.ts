@@ -8,17 +8,11 @@ export default defineEventHandler(async (event)=>{
     const response = {};
     
 
-    const { data:{fats,name ,proteins,carbs, imageUrl} } = await readBody(event);
+    const { } = await readBody(event);
     try {
     
-        const addFood = await prisma.foodSource.create({
-            data: {
-                name: name,
-                fats: fats,
-                proteins: proteins,
-                carbs: carbs,
-                imageUrl: imageUrl,  
-            }
+        const addFood = await prisma.food.findMany({
+          
         });
         response['registered'] = addFood
         response['success'] = true

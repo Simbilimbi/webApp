@@ -8,69 +8,79 @@
                     <ul class="list-none p-0 m-0 border-top-1 border-300">
                       <li class="flex align-items-center py-3 px-2 flex-wrap surface-ground">
                         <div class="text-500 w-full md:w-2 font-medium">Calories Remaining</div>
-                        <div class="text-900 w-full md:w-10">2 300 - 0 =  2 300</div>
+                        <div class="text-900 w-full md:w-10">{{ total_calories }} - {{ calories }} = {{ remaining_calories }} </div>
                       </li>
                       <li class="flex align-items-center py-3 px-2 flex-wrap surface-ground">
                         <div class="text-500 w-full md:w-2 font-medium">Meals</div>
                         <div class="text-900 w-full md:w-10">
                           <div class="grid mt-0 mr-0">
-                            <div class="col-12 md:col-6">
-                              <div class="p-3 border-1 surface-border border-round surface-card">
+                            <div class="col-12 md:col-6" v-for="meal in meal_types">
+                              <div class="p-3 border-1 surface-border border-round surface-card" >
+                                <div v-if="visible==true" class="p-dialog-mask p-component-overlay p-component-overlay-enter w-full" data-pc-section="mask" style=" height: 100%; width: 100%; left: 0px; top: 0px; display: flex; justify-content: center; align-items: center; pointer-events: auto; z-index: 1101;">
+                                <div class="p-dialog p-component" role="dialog" aria-labelledby="pv_id_20_header" aria-modal="true" resizable="false" data-pc-name="dialog" data-pc-section="root" pv_id_12="" style="display: flex; flex-direction: column; pointer-events: auto; width: 60%;" data-pd-focustrap="true">
+                                  <span class="p-hidden-accessible p-hidden-focusable" tabindex="0" role="presentation" aria-hidden="true" data-p-hidden-accessible="true" data-p-hidden-focusable="true" data-pc-section="firstfocusableelement"></span>
+                                  <div class="p-dialog-header" data-pc-section="header">
+                                    <div class="flex flex-column gap-2">
+                                      <h1 class="m-0 text-900 font-semibold text-xl line-height-3">Select food for your Meal</h1>
+                                      <span class="text-600 text-base">My Foods.</span>
+                                    </div>
+                                    <div class="p-dialog-header-icons" data-pc-section="headericons">
+                                      <!---->
+                                      
+                                    </div>
+                                  </div>
+                                  <div class="p-dialog-content" data-pc-section="content">
+                                    <div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+                                      <div class="grid">
+                                        <div class="col-12 md:col-6 lg:col-3" v-for="food in food_items">
+                                          <div class="surface-card shadow-2 p-3 border-round">
+                                            <div class="flex justify-content-between mb-3">
+                                              <div>
+                                                <span class="block text-500 font-medium mb-3">{{ food.name }}</span>
+                                              </div>
+                                              <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem;">
+                                                <span @click="logFood(food.id)"><i class="pi pi-plus text-blue-500 text-xl" ></i></span>
+                                              </div>
+                                            </div>
+                                          
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="p-dialog-footer" data-pc-section="footer">
+                                    <div class="flex gap-3 justify-content-end border-top-1 surface-border pt-5">
+                                      <button class="p-button p-component p-button-text" type="button" aria-label="Cancel" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
+                                        <!---->
+                                        <span class="p-button-label" data-pc-section="label" @click="visible=false">Cancel</span>
+                                        <!---->
+                                        <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
+                                      </button>
+                                      <button class="p-button p-component p-button-rounded" type="button" aria-label="Update" data-pc-name="button" data-pc-section="root" data-pd-ripple="true">
+                                        <!---->
+                                        <span class="p-button-label" data-pc-section="label">Update</span>
+                                        <!---->
+                                        <span role="presentation" aria-hidden="true" data-p-ink="true" data-p-ink-active="false" class="p-ink" data-pc-name="ripple" data-pc-section="root"></span>
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <span class="p-hidden-accessible p-hidden-focusable" tabindex="0" role="presentation" aria-hidden="true" data-p-hidden-accessible="true" data-p-hidden-focusable="true" data-pc-section="lastfocusableelement"></span>
+                                  </div>
+                                </div>
+
                                 <div class="text-900 mb-2">
                                   <i class="pi pi-github mr-2"></i>
                                   <span class="font-medium" style="display: flex; justify-content: space-between;">
-                                    <span>Breakfast</span>
-                                    <span>{{ 0 }}</span>
+                                    <span> {{meal.name}} </span>
+                                    <span> {{meal.name =="BreakFast" ? break_meal_calories: meal.name=="Lunch" ? lunch_meal_calories: meal.name=="Dinner" ? dinner_meal_calories: snacks_meal_calories }} </span>
                                   </span>
                                 </div>
                                 <div class="text-700" >
-                                  <Button label="Add Food" @click="visible=true" severity="help" outlined />
+                                  <Button label="Add Food" @click="select_meal_food(meal)" severity="help" outlined />
                                 </div>
                               </div>
+                              
                             </div>
-                            <div class="col-12 md:col-6">
-                              <div class="p-3 border-1 surface-border border-round surface-card">
-                                <div class="text-900 mb-2">
-                                  <i class="pi pi-github mr-2"></i>
-                                  <span class="font-medium" style="display: flex; justify-content: space-between;">
-                                    <span>Lunch</span>
-                                    <span>{{ 0 }}</span>
-                                  </span>
-                                </div>
-                                <div class="text-700">
-                                  <Button label="Add Food" @click="visible=true" severity="help" outlined />
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-12 md:col-6">
-                              <div class="p-3 border-1 surface-border border-round surface-card">
-                                <div class="text-900 mb-2">
-                                  <i class="pi pi-github mr-2"></i>
-                                  <span class="font-medium" style="display: flex; justify-content: space-between;">
-                                    <span>Dinner</span>
-                                    <span>{{ 0 }}</span>
-                                  </span>
-                                </div>
-                                <div class="text-700">
-                                  <Button label="Add Food" @click="visible=true" severity="help" outlined />
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-12 md:col-6">
-                              <div class="p-3 border-1 surface-border border-round surface-card">
-                                <div class="text-900 mb-2">
-                                  <i class="pi pi-github mr-2"></i>
-                                  <span class="font-medium" style="display: flex; justify-content: space-between;">
-                                    <span>Snacks</span>
-                                    <span>{{ 0 }}</span>
-                                  </span>
-                                </div>
-                                <div class="text-700">
-                                  <Button label="Add Food" @click="visible=true" severity="help" outlined />
-                                </div>
-                              </div>
-                            </div>
-
                           </div>
                         </div>
                       </li>
@@ -78,90 +88,147 @@
                           <div class="text-500 w-full md:w-2 font-medium">Complete Day Log</div>
                           <div class="text-900 w-full md:w-10">
                             <Button label="Submit" severity="secondary" text />
-                            
                           </div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <Dialog v-model:visible="visible" modal header="Calorie and Macro Goal" :style="{ width: '25rem' }">
-                          <span class="p-text-secondary block mb-5">Update your information.</span>
-                          <div class="align-items-center gap-3 mb-3">
-                              <label for="username" class="font-semibold w-6rem">Calories</label>
-                              <InputText id="username" class="" autocomplete="off" />
-                          </div>
-                          
-                          <div class="flex justify-content-end gap-2">
-                              <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-                              <Button type="button" label="Save" @click="visible = false"></Button>
-                          </div>
-                </Dialog>
          </section>
     </NuxtLayout>
-  </template>
+</template>
   
-  <script setup lang="ts">
+<script setup lang="ts">
+ import { useToast } from "primevue/usetoast";
+import { useAuthStore } from '@/stores/auth';
+import { storeToRefs } from "pinia";
+import {useUserStore} from "~/stores/user"
+import moment from "moment";
+import Swal from "sweetalert2"
+const toast = useToast();
+const userStore = useUserStore()
+const authStore = useAuthStore();
+const visible= ref(false)
+const meal_types = ref([])
+const food_items = ref([])
+const selected_meal_id = ref()
+const break_meal_calories = ref()
+const dinner_meal_calories = ref()
+const lunch_meal_calories = ref()
+const snacks_meal_calories = ref()
+const calories = ref()
+const remaining_calories = ref()
+const total_calories = ref()
 
-  const visible= ref(false)
+onMounted(async() => {
+   let result =  await userStore.getMeals().then((data)=>{
+     meal_types.value = data.data.goal
+   })
+   
+   await userStore.getGoal().then((data)=>{
+    total_calories.value = data.data.goal[0].calories
+   })
+   await userStore.getAllFooditems().then((data)=>{
+    food_items.value = data.data.registered
+   })
+   
+   await userStore.getBreakFastMeal().then((data)=>{
+       break_meal_calories.value = data.data.goal.reduce((acc, meal) => {
+        return acc + meal.food.reduce((sum, food) => {
+          return sum + (parseInt(food.fats)*9) + (parseInt(food.proteins)*4) + (parseInt(food.carbs)*4);
+        }, 0);
+      }, 0);        
+   })
 
-onMounted(() => {
-    chartData.value = setChartData();
-    chartOptions.value = setChartOptions();
+   await userStore.getLunchMeal().then((data)=>{
+       lunch_meal_calories.value = data.data.goal.reduce((acc, meal) => {
+        return acc + meal.food.reduce((sum, food) => {
+          return sum + (parseInt(food.fats)*9) + (parseInt(food.proteins)*4) + (parseInt(food.carbs)*4);
+        }, 0);
+      }, 0);        
+   })
+
+   await userStore.getDinnerMeal().then((data)=>{
+       dinner_meal_calories.value = data.data.goal.reduce((acc, meal) => {
+        return acc + meal.food.reduce((sum, food) => {
+          return sum + (parseInt(food.fats)*9) + (parseInt(food.proteins)*4) + (parseInt(food.carbs)*4);
+        }, 0);
+      }, 0);        
+   })
+
+   await userStore.getSnacksMeal().then((data)=>{
+       snacks_meal_calories.value = data.data.goal.reduce((acc, meal) => {
+        return acc + meal.food.reduce((sum, food) => {
+          return sum + (parseInt(food.fats)*9) + (parseInt(food.proteins)*4) + (parseInt(food.carbs)*4);
+        }, 0);
+      }, 0);        
+   })
+
+   calories.value = break_meal_calories.value + lunch_meal_calories.value + dinner_meal_calories.value + snacks_meal_calories.value
+   remaining_calories.value = Number(total_calories.value) - calories.value
 });
 
-const chartData = ref();
-const chartOptions = ref();
-
-const setChartData = () => {
-    return {
-        labels: ['Fats', 'Carbs', 'Proteins', ],
-        datasets: [
-            {
-                
-                data: [540, 325, 702],
-                backgroundColor: ['rgba(249, 115, 22, 0.2)', 'rgba(6, 182, 212, 0.2)', 'rgb(107, 114, 128, 0.2)', 'rgba(139, 92, 246 0.2)'],
-                borderColor: ['rgb(249, 115, 22)', 'rgb(6, 182, 212)', 'rgb(107, 114, 128)', 'rgb(139, 92, 246)'],
-                borderWidth: 1
-            }
-        ]
-    };
-};
-const setChartOptions = () => {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-    return {
-        plugins: {
-            legend: {
-                labels: {
-                    color: textColor
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder
-                }
-            },
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder
-                }
-            }
-        }
-    };
+const select_meal_food = (meal)=>{
+ visible.value = true
+ selected_meal_id.value = meal.id
 }
- 
+
+
+ const logFood = async (food_id)=>{
+
+  let data = {
+    id : selected_meal_id.value,
+    food_id: food_id
+  }
+
+  console.log('mbilimbi',food_id)
+  let result = await userStore.updateMeal(data)
+  console.log('hu')
+
+  if (result.data.success){
+    visible.value = false  
+    await userStore.getMeals()
+    await userStore.getBreakFastMeal().then((data)=>{
+       break_meal_calories.value = data.data.goal.reduce((acc, meal) => {
+        return acc + meal.food.reduce((sum, food) => {
+          return sum + (parseInt(food.fats)*9) + (parseInt(food.proteins)*4) + (parseInt(food.carbs)*4);
+        }, 0);
+      }, 0);        
+    })
+    await userStore.getLunchMeal().then((data)=>{
+       lunch_meal_calories.value = data.data.goal.reduce((acc, meal) => {
+        return acc + meal.food.reduce((sum, food) => {
+          return sum + (parseInt(food.fats)*9) + (parseInt(food.proteins)*4) + (parseInt(food.carbs)*4);
+        }, 0);
+      }, 0);        
+   })
+   await userStore.getDinnerMeal().then((data)=>{
+       dinner_meal_calories.value = data.data.goal.reduce((acc, meal) => {
+        return acc + meal.food.reduce((sum, food) => {
+          return sum + (parseInt(food.fats)*9) + (parseInt(food.proteins)*4) + (parseInt(food.carbs)*4);
+        }, 0);
+      }, 0);        
+   })
+
+   await userStore.getSnacksMeal().then((data)=>{
+       snacks_meal_calories.value = data.data.goal.reduce((acc, meal) => {
+        return acc + meal.food.reduce((sum, food) => {
+          return sum + (parseInt(food.fats)*9) + (parseInt(food.proteins)*4) + (parseInt(food.carbs)*4);
+        }, 0);
+      }, 0);        
+   })
+
+   remaining_calories.value = Number(total_calories.value) - calories.value
+    toast.add({severity:'success', summary: 'Food Logged', detail:'Food successfully logged', life: 3000});
+  
+  }
+  else{
+    visible.value = false
+    toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
+    
+
+  }
+
+ }
   //    import { useToast } from "primevue/usetoast";
   //    import { storeToRefs } from "pinia";
   //   //  import {useAdminStore} from "~/stores/admin"

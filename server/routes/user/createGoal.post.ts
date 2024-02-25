@@ -8,21 +8,18 @@ export default defineEventHandler(async (event)=>{
     const response = {};
     
 
-    const { data:{fats,name,description,proteins,carbs, imageUrl} } = await readBody(event);
+    const { data:{calories,user_id ,proteins,fats} } = await readBody(event);
     try {
     
-        const addFood = await prisma.food.create({
+        const setGoal = await prisma.goal.create({
             data: {
-                name: name,
-                description: description,
-                fats: fats,
-                proteins: proteins,
-                carbs: carbs,
-                
+                user_id: user_id,
+               
+                calories: calories,
                 
             }
         });
-        response['registered'] = addFood
+        response['goal'] = setGoal
         response['success'] = true
 
   

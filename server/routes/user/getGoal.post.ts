@@ -6,23 +6,15 @@ import bcrypt from "bcrypt";
 
 export default defineEventHandler(async (event)=>{
     const response = {};
+    const {data:{id}} = await readBody(event)
     
-
-    const { data:{fats,name,description,proteins,carbs, imageUrl} } = await readBody(event);
     try {
     
-        const addFood = await prisma.food.create({
-            data: {
-                name: name,
-                description: description,
-                fats: fats,
-                proteins: proteins,
-                carbs: carbs,
-                
-                
-            }
+        const getGoal = await prisma.goal.findMany({
+            
+            
         });
-        response['registered'] = addFood
+        response['goal'] = getGoal
         response['success'] = true
 
   
