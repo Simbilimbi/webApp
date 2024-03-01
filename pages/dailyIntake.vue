@@ -38,10 +38,7 @@
                                     </div>
                                     <div class="p-dialog-content" data-pc-section="content">
                                       <div class="surface-ground px-4 py-5 md:px-6 lg:px-8 w-full" style="height: 500%;">
-                                        <div class="field mb-4 col-12 md:col-6"> 
-                                
-                                <input class="p-inputtext p-component" id="first_name" v-model="food_name" type="text">
-                             </div>
+                                    
                                         <div class="grid">
                                           <div class="col-12 md:col-6 lg:col-4" v-for="food in food_items">
                                             <div class="surface-card shadow-2 p-3 border-round w-full" style="height: 100%;" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]">

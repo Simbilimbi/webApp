@@ -3,78 +3,49 @@
     <section class="section">
             <div class="container-fluid pt-5">
                 <div class="row">
-                    <div class="text-900 font-medium text-xl mb-3">Add Food</div>
+                    <div class="text-900 font-medium text-xl mb-3">Select Your Workout</div>
                     <div class="surface-card p-4 shadow-2 border-round p-fluid">
                         <div class="grid formgrid p-fluid">
                             <div class="field mb-4 col-12 md:col-4">
-                                <Button @click="addLineItem = true" label="Add Food Item" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto" outlined />
+                                <Button @click="addLineItem = true" label="Running" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto fa fa-running" outlined />
                             </div>
                             <div class="field mb-4 col-12 md:col-4">
-                                <Button @click="visible = true" label="Create Meal" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto" outlined />
+                                <Button @click="visible = true" label="Cycling" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto" outlined />
                             </div>
-                            <div class="field mb-4 col-12 md:col-4">
-                                <Button @click="dialogue_goal = true" label="Set Goal" icon="pi pi-plus" class="p-button p-component p-button-secondary p-button-outlined w-auto" outlined />
-                            </div>
+                      
                             
                            </div> 
                     </div>
                 </div>
             </div>
         </section>
-       <Dialog v-model:visible="addLineItem" maximizable modal header="Add Food" position="center" :style="{ width: '55vw' }">
+       <Dialog v-model:visible="addLineItem" maximizable modal header="Running Km" position="center" :style="{ width: '55vw' }">
                         <div class="grid formgrid p-fluid">
                             <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="first_name" class="font-medium text-900">Food name</label> 
-                                <input class="p-inputtext p-component" id="first_name" v-model="food_name" type="text">
+                                <label for="first_name" class="font-medium text-900">Distance</label> 
+                                <input class="p-inputtext p-component" id="first_name" v-model="running" type="text">
                              </div>
-                            <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="surname" class="font-medium text-900">Fats in grams</label> 
-                                <input class="p-inputtext p-component" v-model="fat_amount" id="surname" type="text"> 
-                            </div>
-                            <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="username" class="font-medium text-900">Proteins in grams</label> 
-                                <input class="p-inputtext p-component" v-model="protein_amount" id="username" type="text"> 
-                            </div>
-                            <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="user_email" class="font-medium text-900">Carbs in grams</label> 
-                                <input class="p-inputtext p-component" v-model="carbs_amount" id="user_email" type="text"> 
-                            </div>
-                            
-                            <div class="field mb-4 col-12 md:col-6"> 
-                                <label for="age" class="font-medium text-900">Description</label> 
-                                <input class="p-inputtext" v-model="description" id="age" type="text"> 
-                            </div>
-                            </div>
-                            <div class="surface-border border-top-1 opacity-50 mb-4 col-12"></div>
-                          
-                           <button class="p-button p-component w-auto" type="button" aria-label="Add Food" @click="addFood()"> <span class="p-button-icon p-button-icon-left pi pi-file"></span> <span class="p-button-label">Add Food</span>
-                              <span class="p-ink" role="presentation" aria-hidden="true"></span>
-                           </button>
-        </Dialog>
-        <Dialog v-model:visible="visible" modal header="Create Meal" :style="{ width: '25rem' }">
-                        
-                          <div class="align-items-center gap-3 mb-3">
-                              <label for="username" class="font-semibold w-6rem">Meal</label>
-                              <DropDown class="w-full" id="username" v-model="selected_meal"  :options="meal_types" autocomplete="off" />
+                             <div class="flex justify-content-end gap-2">
+                              <Button type="button" label="Cancel" severity="secondary" @click="addLineItem = false"></Button>
+                              <Button type="button" label="Create" @click="createRunning()"></Button>
                           </div>
-                          
+                        </div>
+                
+        </Dialog>
+        <Dialog v-model:visible="visible" modal header="Distance cycled" :style="{ width: '25rem' }">
+                        
+          <div class="grid formgrid p-fluid">
+                            <div class="field mb-4 col-12 md:col-6"> 
+                                <label for="first_name" class="font-medium text-900">Distance</label> 
+                                <input class="p-inputtext p-component" id="first_name" v-model="cycled" type="text">
+                             </div>
+                      </div>
                           <div class="flex justify-content-end gap-2">
                               <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-                              <Button type="button" label="Create" @click="createMeal"></Button>
+                              <Button type="button" label="Create" @click="createCycling()"></Button>
                           </div>
                 </Dialog>
-                <Dialog v-model:visible="dialogue_goal" modal header="Calorie and Macro Goal" :style="{ width: '25rem' }">
-                  
-                          <div class="align-items-center gap-3 mb-3">
-                              <label for="username" class="font-semibold w-6rem">Calories</label>
-                              <InputText id="username" v-model="set_goal" class="" autocomplete="off" />
-                          </div>
-                          
-                          <div class="flex justify-content-end gap-2">
-                              <Button type="button" label="Cancel" severity="secondary" ></Button>
-                              <Button type="button" label="Save" @click="createGoal()"></Button>
-                          </div>
-                </Dialog>
+               
    </NuxtLayout>
  </template>
  
@@ -112,8 +83,10 @@ const carbs_amount = ref()
 const description = ref()
 const id = authStore.userData.id
 const set_goal= ref()
+const running = ref()
+const cycled  = ref()
 
-const my_meals = ref(['BreakFast','Lunch','Dinner','Snacks'])
+
 const selected_meal = ref()
 const resetFood = ()=>{
   fat_amount.value = null
@@ -123,41 +96,41 @@ const resetFood = ()=>{
   description.value = null
 }
 
-const createMeal =async ()=>{
+const createCycling =async ()=>{
   let data = {
-    name: selected_meal.value,
+    cyclying: cycled.value,
     user_id: id
   }
-  let result = await userStore.createMeal(data)
+  let result = await userStore.createCycling(data)
   console.log('result',result)
   if (result.data.success){
     visible.value = false   
-    toast.add({severity:'success', summary: 'Meal Created', detail:'You have Successfully created a meal', life: 3000});
-    selected_meal.value = null
+    toast.add({severity:'success', summary: 'Cycle Created', detail:'You have Successfully created distancce you cycled', life: 3000});
+    cycled.value = null
   }
   else{
     visible.value = false
     toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
-    selected_meal.value = null
+    cycled.value = null
 
   }
 }
 
-const createGoal = async () =>{
+const createRunning = async () =>{
   let message = {
     user_id: id,
-    calories: set_goal.value
+    running: running.value
   }
-  let result = await userStore.createGoal(message)
+  let result = await userStore.createRunning(message)
   if (result.data.success){
     dialogue_goal.value = false   
-    toast.add({severity:'success', summary: 'Goal Created', detail:'You have Successfully created a goal', life: 3000});
-    set_goal.value = null
+    toast.add({severity:'success', summary: 'Exercise created', detail:'You have Successfully entered the distance ran', life: 3000});
+    running.value = null
   }
   else{
     dialogue_goal.value = false
     toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
-    set_goal.value = null
+    running.value = null
 
   }
 }

@@ -7,7 +7,7 @@
               <Chart type="doughnut" :data="chartData" :options="chartOptions" class="w-full md:w-30rem justify-content-center" />
                     <div >
                       <Chip label="Average daily Calories" />
-                      <Chip label="2334" style="margin-left: 7px;" />
+                      <Chip :label="average_calories" style="margin-left: 7px;" />
                     </div>
             </div>
         </div> 
@@ -28,10 +28,20 @@ const toast = useToast();
 const userStore = useUserStore()
 const authStore = useAuthStore();
 const totals = ref()
+const today = new Date();
+const year = today.getFullYear();
+const month = today.getMonth();
+const daysInMonth = Number(new Date(year, month + 1, 0).getDate());
+const total_calories = ref()
+let average_calories = ref()
+
+
 
 onMounted(async() => {
   let result = await userStore.getMonthlyMeals()
   totals.value = calculateTotals(result)
+  total_calories.value = Number(totals.value.totalCalories)
+  average_calories.value = (total_calories.value/daysInMonth).toFixed(2)
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
 });
@@ -106,16 +116,18 @@ function calculateTotals(data) {
   let totalCarbs = 0;
   let totalProteins = 0;
   let totalMacros = 0;
+  let totalCalories = 0
 
   data.data.goal.forEach((goal) => {
     goal.food.forEach((food) => {
       totalFats += parseInt(food.fats);
       totalCarbs += parseInt(food.carbs);
       totalProteins += parseInt(food.proteins);
+      totalCalories += parseInt(food.calories)
     });
   });
   totalMacros = totalFats + totalCarbs + totalProteins;
-  return { totalFats, totalCarbs, totalProteins,totalMacros };
+  return { totalFats, totalCarbs, totalProteins,totalMacros ,totalCalories};
 }
 
 

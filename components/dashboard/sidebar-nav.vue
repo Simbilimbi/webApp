@@ -57,7 +57,7 @@
   const admin_menus = ref([
             {
                 key: '1',
-                label: 'Food Items',
+                label: 'Exercise',
                 icon:  'pi pi-reddit',
                 to:'/admin/register',
                 

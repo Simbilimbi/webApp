@@ -21,6 +21,8 @@ model User {
   created_at          DateTime       @default(now())
   goal Goal?
   meal Meal[]
+   running              Running[]
+  cycling              Cycling[]
 
 }
 
@@ -56,6 +58,24 @@ model Food{
   proteins String
   fats String
   meal  Meal []
+}
+
+model Running {
+  id         String   @id @default(cuid())
+  distance   Float
+  
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+  created_at DateTime @default(now())
+}
+
+model Cycling {
+  id         String   @id @default(cuid())
+  distance   Float
+  
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+  created_at DateTime @default(now())
 }
 
  enum Meals {
