@@ -25,11 +25,12 @@
                                 <label for="first_name" class="font-medium text-900">Distance</label> 
                                 <input class="p-inputtext p-component" id="first_name" v-model="running" type="text">
                              </div>
-                             <div class="flex justify-content-end gap-2">
+                             
+                        </div>
+                        <div class="flex justify-content-end gap-2">
                               <Button type="button" label="Cancel" severity="secondary" @click="addLineItem = false"></Button>
                               <Button type="button" label="Create" @click="createRunning()"></Button>
                           </div>
-                        </div>
                 
         </Dialog>
         <Dialog v-model:visible="visible" modal header="Distance cycled" :style="{ width: '25rem' }">
