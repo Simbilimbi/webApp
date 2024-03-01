@@ -9,9 +9,14 @@ export default defineEventHandler(async (event) => {
   const { data: { id } } = await readBody(event);
 
   try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const getMeals = await prisma.meal.findMany({
       where: {
-        name: 'Dinner'
+        name: 'Dinner',
+        created_at: {
+          gte: today,
+        },
       },
       include: {
         food: true

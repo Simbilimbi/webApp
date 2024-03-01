@@ -9,13 +9,25 @@ export default defineEventHandler(async (event)=>{
     const {data:{id}} = await readBody(event)
     
     try {
-         const today = new Date()
-         today.setHours(0,0,0,0)
-        const getGoal = await prisma.goal.findMany({
+        const today = new Date()
+       today.setHours(0,0,0,0)
+       const startMonth= new Date(today.getFullYear(), today.getMonth(),1)
+       const endMonth  = new Date(today.getFullYear(),today.getMonth()+1,0)
+    
+        const getMeals = await prisma.meal.findMany({
+            where: {
+                created_at: {
+                  gte: startMonth,
+                  lte: endMonth
+                },
+              },
+          include: {
+            food: true
+          }
             
             
         });
-        response['goal'] = getGoal
+        response['goal'] = getMeals
         response['success'] = true
 
   

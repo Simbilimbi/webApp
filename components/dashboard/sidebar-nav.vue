@@ -2,7 +2,7 @@
   <div>
     <aside class="sidebar-nav-wrapper">
       <div @click="goToHome()" class="navbar-logo">
-        <img width="180" src="/images/logo.png" alt="logo" style="margin-top: 10%; margin-bottom: 5px;">
+        <img width="180" src="/images/finalRev.jpg" alt="logo" style="margin-top: 10%; margin-bottom: 5px;">
       </div>
       <nav  class="sidebar-nav">
        

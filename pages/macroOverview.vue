@@ -16,7 +16,22 @@
 </template>
 
 <script setup lang="ts">
-onMounted(() => {
+
+import { useToast } from "primevue/usetoast";
+import { useAuthStore } from '@/stores/auth';
+import { storeToRefs } from "pinia";
+import {useUserStore} from "~/stores/user"
+import moment from "moment";
+import Swal from "sweetalert2"
+import { data } from "jquery";
+const toast = useToast();
+const userStore = useUserStore()
+const authStore = useAuthStore();
+const totals = ref()
+
+onMounted(async() => {
+  let result = await userStore.getMonthlyMeals()
+  totals.value = calculateTotals(result)
     chartData.value = setChartData();
     chartOptions.value = setChartOptions();
 });
@@ -31,7 +46,7 @@ const setChartData = () => {
         labels: ['Fats', 'Proteins', 'Carbs'],
         datasets: [
             {
-                data: [540, 325, 702],
+                data: [formating_to_decimal_place((totals.value.totalFats/totals.value.totalMacros)*100), ((totals.value.totalProteins/totals.value.totalMacros)*100).toFixed(2), ((totals.value.totalCarbs/totals.value.totalMacros)*100).toFixed(2)],
                 backgroundColor: [documentStyle.getPropertyValue('--cyan-500'), documentStyle.getPropertyValue('--orange-500'), documentStyle.getPropertyValue('--gray-500')],
                 hoverBackgroundColor: [documentStyle.getPropertyValue('--cyan-400'), documentStyle.getPropertyValue('--orange-400'), documentStyle.getPropertyValue('--gray-400')]
             }
@@ -49,6 +64,14 @@ const setChartOptions = () => {
                 labels: {
                     cutout: '10%',
                     color: textColor
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: (context) => {
+                        const value = context.parsed;
+                        return value ? `${value}%` : '';
+                    }
                 }
             }
         }
@@ -76,6 +99,29 @@ const fat_amount = ref()
 const protein_amount = ref()
 const carbs_amount = ref()
 const food_image = ref
+
+
+function calculateTotals(data) {
+  let totalFats = 0;
+  let totalCarbs = 0;
+  let totalProteins = 0;
+  let totalMacros = 0;
+
+  data.data.goal.forEach((goal) => {
+    goal.food.forEach((food) => {
+      totalFats += parseInt(food.fats);
+      totalCarbs += parseInt(food.carbs);
+      totalProteins += parseInt(food.proteins);
+    });
+  });
+  totalMacros = totalFats + totalCarbs + totalProteins;
+  return { totalFats, totalCarbs, totalProteins,totalMacros };
+}
+
+
+const formating_to_decimal_place = (value)=>{
+   return value.toFixed(2)
+}
 // const users = storeToRefs(adminStore).users
 // const name = storeToRefs(adminStore).name
 // const surname = storeToRefs(adminStore).surname

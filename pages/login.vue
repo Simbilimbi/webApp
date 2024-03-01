@@ -5,7 +5,7 @@
                 <div class="flex">
                 <div class="surface-section w-full md:w-6 p-6 md:p-8" style="border-radius: 15px;">
                     <div class="mb-5">
-                    <img src="/images/Revelit Logo.svg" alt="Image" height="50"  class="mb-3" >
+                    <img src="/images/finalRev.jpg" alt="Image" height="70"  class="mb-3" >
                     <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
                     <span class="text-600 font-medium mr-2">Don't have an account?</span>
                      <NuxtLink class="font-medium no-underline text-blue-500 cursor-pointer" to="/register">Create today!</NuxtLink>

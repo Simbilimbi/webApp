@@ -94,6 +94,14 @@ const toast = useToast();
 const userStore = useUserStore()
 const authStore = useAuthStore();
 
+
+onMounted(()=>{
+   userStore.getAllFooditems()
+  
+
+
+})
+
 const visible = ref(false)
 const addLineItem = ref(false)
 const dialogue_goal = ref(false)
@@ -105,7 +113,7 @@ const description = ref()
 const id = authStore.userData.id
 const set_goal= ref()
 
-const meal_types = ref(['BreakFast','Lunch','Dinner','Snacks'])
+const my_meals = ref(['BreakFast','Lunch','Dinner','Snacks'])
 const selected_meal = ref()
 const resetFood = ()=>{
   fat_amount.value = null
