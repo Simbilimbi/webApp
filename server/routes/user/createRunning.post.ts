@@ -14,7 +14,7 @@ export default defineEventHandler(async (event)=>{
         const createMeal = await prisma.running.create({
             data: {
                 user_id: user_id,
-                name: running,
+                distance: parseFloat(running),
                 
                 
                 

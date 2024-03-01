@@ -23,7 +23,7 @@
                         <div class="grid formgrid p-fluid">
                             <div class="field mb-4 col-12 md:col-6"> 
                                 <label for="first_name" class="font-medium text-900">Distance</label> 
-                                <input class="p-inputtext p-component" id="first_name" v-model="running" type="text">
+                                <input class="p-inputtext p-component" id="first_name" v-model="running" type="Number">
                              </div>
                              
                         </div>
@@ -38,7 +38,7 @@
           <div class="grid formgrid p-fluid">
                             <div class="field mb-4 col-12 md:col-6"> 
                                 <label for="first_name" class="font-medium text-900">Distance</label> 
-                                <input class="p-inputtext p-component" id="first_name" v-model="cycled" type="text">
+                                <input class="p-inputtext p-component" id="first_name" v-model="cycled" type="Number">
                              </div>
                       </div>
                           <div class="flex justify-content-end gap-2">
