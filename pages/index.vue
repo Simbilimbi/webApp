@@ -44,6 +44,12 @@
                            <Chart type="doughnut" :data="chartData" :options="chartOptions" class="w-full md:w-30rem"  />
                        </div>
                    </div>
+                   <div class="col-6 md:col-12">
+                        <div class="card-style">
+                            <h2>Distance cycled and ran</h2>
+                            <Chart type="bar" :data="basicData" />
+                        </div>
+                    </div>
              </div>
          </div>
    </section>
@@ -74,7 +80,7 @@ definePageMeta({
   })
    totals.value = calculateTotals(result)
    food_calories.value = Number(totals.value.totalcalories)
-   calculate_progress.value = (food_calories.value/ Number(total_calories.value))*100
+   calculate_progress.value = ((food_calories.value/ Number(total_calories.value))*100).toFixed(0)
    chartData.value = setChartData();
    chartOptions.value = setChartOptions();
    
@@ -121,6 +127,22 @@ const setChartOptions = () => {
        }
    };
 };
+
+const basicData =  {
+        labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sarturday'],
+        datasets: [
+            {
+                label: 'Running',
+                backgroundColor: '#42A5F5',
+                data: [65, 59, 80, 81, 56, 55, 40,60]
+            },
+            {
+                label: 'Cycling',
+                backgroundColor: '#9CCC65',
+                data: [28, 48, 40, 19, 86, 27, 90,70]
+            }
+        ]
+    }
 function calculateTotals(data) {
  let totalFats = 0;
  let totalCarbs = 0;

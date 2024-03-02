@@ -192,84 +192,7 @@ const set_goal= ref()
 
 const meal_types1 = ref(['BreakFast','Lunch','Dinner','Snacks'])
 const selected_meal = ref()
-const resetFood = ()=>{
-  fat_amount.value = null
-  food_name.value =null
-  protein_amount.value = null
-  carbs_amount.value = null
-  description.value = null
-}
 
-const createMeal =async ()=>{
-  let data = {
-    name: selected_meal.value,
-    user_id: id
-  }
-  let result = await userStore.createMeal(data)
-  console.log('result',result)
-  if (result.data.success){
-    visible1.value = false   
-    toast.add({severity:'success', summary: 'Meal Created', detail:'You have Successfully created a meal', life: 3000});
-    selected_meal.value = null
-  }
-  else{
-    visible1.value = false
-    toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
-    selected_meal.value = null
-
-  }
-}
-
-const createGoal = async () =>{
-  let message = {
-    user_id: id,
-    calories: set_goal.value
-  }
-  let result = await userStore.createGoal(message)
-  if (result.data.success){
-    dialogue_goal.value = false  
-    let result =  await userStore.getTodayMeals().then((data)=>{
-     meal_types.value = data.data.goal
-   }) 
-    toast.add({severity:'success', summary: 'Goal Created', detail:'You have Successfully created a goal', life: 3000});
-    set_goal.value = null
-  }
-  else{
-    dialogue_goal.value = false
-    toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
-    set_goal.value = null
-
-  }
-}
-
-const addFood = async ()=>{
-    let message = {
-        name: food_name.value,
-        fats: fat_amount.value ,
-        proteins : protein_amount.value ,
-        carbs: carbs_amount.value,
-        calories: Number(description.value)
-    }
-
-    let result = await userStore.addFood(message)
-    console.log('result',result)
-    if (result.data.success) {
-        
-                      
-        Swal.fire({
-        icon: 'success',
-        title: ' Food Successfully Added',
-        timer: 4000})
-        resetFood()
-        addLineItem.value = false
-    }
-   
-    else {
-        toast.add({severity:'warn', summary: 'Failed', detail:'Creation Failed', life: 3000});
-    }
-
-    
-}
 
  
 
@@ -395,72 +318,91 @@ const select_meal_food = (meal)=>{
   }
 
  }
-  //    import { useToast } from "primevue/usetoast";
-  //    import { storeToRefs } from "pinia";
-  //   //  import {useAdminStore} from "~/stores/admin"
-  //    import moment from "moment";
-  
+ 
+ const resetFood = ()=>{
+  fat_amount.value = null
+  food_name.value =null
+  protein_amount.value = null
+  carbs_amount.value = null
+  description.value = null
+}
+
+const createMeal =async ()=>{
+  let data = {
+    name: selected_meal.value,
+    user_id: id
+  }
+  let result = await userStore.createMeal(data)
+  console.log('result',result)
+  if (result.data.success){
+    let result =  await userStore.getTodayMeals().then((data)=>{
+     meal_types.value = data.data.goal
+   })
+    visible1.value = false   
+    toast.add({severity:'success', summary: 'Meal Created', detail:'You have Successfully created a meal', life: 3000});
+    selected_meal.value = null
+  }
+  else{
+    visible1.value = false
+    toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
+    selected_meal.value = null
+
+  }
+}
+
+const createGoal = async () =>{
+  let message = {
+    user_id: id,
+    calories: set_goal.value
+  }
+  let result = await userStore.createGoal(message)
+  if (result.data.success){
+    dialogue_goal.value = false  
+    let result =  await userStore.getTodayMeals().then((data)=>{
+     meal_types.value = data.data.goal
+   }) 
+    toast.add({severity:'success', summary: 'Goal Created', detail:'You have Successfully created a goal', life: 3000});
+    set_goal.value = null
+  }
+  else{
+    dialogue_goal.value = false
+    toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
+    set_goal.value = null
+
+  }
+}
+
+const addFood = async ()=>{
+    let message = {
+        name: food_name.value,
+        fats: fat_amount.value ,
+        proteins : protein_amount.value ,
+        carbs: carbs_amount.value,
+        calories: Number(description.value)
+    }
+
+    let result = await userStore.addFood(message)
+    console.log('result',result)
+    if (result.data.success) {
+        
+                      
+        Swal.fire({
+        icon: 'success',
+        title: ' Food Successfully Added',
+        timer: 4000})
+        resetFood()
+        addLineItem.value = false
+    }
+   
+    else {
+        toast.add({severity:'warn', summary: 'Failed', detail:'Creation Failed', life: 3000});
+    }
+
+    
+}
     
   
-  //    // definePageMeta({ 
-  //    //     middleware: ["auth"]
-  //    // });
-  // const toast = useToast();
-  // const selectGender = ref()
-  // const gender1 = ref(["FEMALE","MALE"]);
-  // const user_type = ref(["ADMIN","HR_OFFICER","HR_MANAGER","HR_DIRECTOR","FINANCE"])
-  // const title_options = ref(["Mr","Mrs","Ms"])
-  // const adminStore = useAdminStore()
-
-  
-  
-
-  const food_image = ref
-  // const users = storeToRefs(adminStore).users
-  // const name = storeToRefs(adminStore).name
-  // const surname = storeToRefs(adminStore).surname
-  // const username = storeToRefs(adminStore).username
-  // const email = storeToRefs(adminStore).email
-  // const phone = storeToRefs(adminStore).phone
-  // const gender = storeToRefs(adminStore).gender
-  // const title = storeToRefs(adminStore).title
-  // const age = storeToRefs(adminStore).age
-  // const accountTypes = storeToRefs(adminStore).profile
-  // const password = storeToRefs(adminStore).password
-  // const cost_centers = storeToRefs(adminStore).centers
-  // const selected_center = storeToRefs(adminStore).selected_center
-  // const commodities = storeToRefs(adminStore).cost_commodities
-  // const selectedCommodities = storeToRefs(adminStore).selectedCommodities
-  
-  // onMounted( async () => {
-  //   let cost_centers = await adminStore.getAllCost()
-  //   let users  = await adminStore.getAllUsers()
-  // })
-  // const register = async () =>{
-  
-  // let result = await adminStore.registerUser();
-  // console.log ("my result")
-  // console.log(result.data)
-  // console.log(result.data.success)
-  // if(result.data.success){
-  //        addLineItem.value = false
-  //        toast.add({severity:'success', summary: 'You are registered', detail:'You will be notified once your account is activated', life: 3000});
-  //       //  navigateTo('/login')
-  
-  //     }
-  //     else{
-  
-  //         toast.add({severity:'warn', summary: 'Error!', detail:result.data.message, life: 3000});
-       
-  //     }
-  // } 
-  
-  // const selectCommodityCodes = async (value) => {
-  //   selectedCommodities.value = null
-  //   let result = await adminStore.getManySelectedCommodities(value)
-  
-  // }
-  
+ 
    
   
   </script>
