@@ -34,13 +34,30 @@
                                         <h1 class="m-0 text-900 font-semibold text-xl line-height-3">Select food for your Meal</h1>
                                         <span class="text-600 text-base">My Foods.</span>
                                       </div>
-                                      
+                                      <IconField iconPosition="left">
+                                        
+                                        <InputText v-model="value1" @input="food_search()" placeholder="Search" />
+                                      </IconField>
                                     </div>
                                     <div class="p-dialog-content" data-pc-section="content">
+                                    
+                  
                                       <div class="surface-ground px-4 py-5 md:px-6 lg:px-8 w-full" style="height: 500%;">
                                     
                                         <div class="grid">
-                                          <div class="col-12 md:col-6 lg:col-4" v-for="food in food_items">
+                                          <div class="col-12 md:col-6 lg:col-4" v-if="!value1" v-for="food in food_items">
+                                            <div class="surface-card shadow-2 p-3 border-round w-full" style="height: 100%;" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]">
+                                              <div class="flex justify-content-between mb-3">
+                                                <div>
+                                                  <span class="block text-500 font-medium mb-3">{{ food.name }}</span>
+                                                </div>
+                                                <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem;">
+                                                  <span @click="logFood(food.id)"><i class="pi pi-plus text-blue-500 text-xl" ></i></span>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-12 md:col-6 lg:col-4" v-else-if="value1" v-for="food in filtered_food_items">
                                             <div class="surface-card shadow-2 p-3 border-round w-full" style="height: 100%;" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]">
                                               <div class="flex justify-content-between mb-3">
                                                 <div>
@@ -158,6 +175,9 @@
   
 <script setup lang="ts">
  import { useToast } from "primevue/usetoast";
+ 
+
+
 import { useAuthStore } from '@/stores/auth';
 import { storeToRefs } from "pinia";
 import {useUserStore} from "~/stores/user"
@@ -189,6 +209,8 @@ const carbs_amount = ref()
 const description = ref()
 const id = authStore.userData.id
 const set_goal= ref()
+const value1 = ref()
+const filtered_food_items = ref()
 
 const meal_types1 = ref(['BreakFast','Lunch','Dinner','Snacks'])
 const selected_meal = ref()
@@ -357,6 +379,9 @@ const createGoal = async () =>{
   }
   let result = await userStore.createGoal(message)
   if (result.data.success){
+    await userStore.getGoal().then((data)=>{
+    total_calories.value = data.data.goal[0].calories
+   })
     dialogue_goal.value = false  
     let result =  await userStore.getTodayMeals().then((data)=>{
      meal_types.value = data.data.goal
@@ -404,8 +429,14 @@ const addFood = async ()=>{
     
 }
     
+const food_search = () => {
   
- 
+   filtered_food_items.value = food_items.value.filter((food) => {
+    return food.name.toLowerCase().includes(value1.value.toLowerCase());
+    
+  });
+  
+};
    
   
   </script>
