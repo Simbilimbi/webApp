@@ -361,6 +361,9 @@ const createGoal = async () =>{
     let result =  await userStore.getTodayMeals().then((data)=>{
      meal_types.value = data.data.goal
    }) 
+   await userStore.getGoal().then((data)=>{
+    total_calories.value = data.data.goal[0].calories
+   })
     toast.add({severity:'success', summary: 'Goal Created', detail:'You have Successfully created a goal', life: 3000});
     set_goal.value = null
   }
