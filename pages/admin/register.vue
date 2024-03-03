@@ -97,10 +97,11 @@ const resetFood = ()=>{
   description.value = null
 }
 
-const createCycling =async ()=>{
+const createCycling = async ()=>{
   let data = {
+    user_id: id,
     cyclying: cycled.value,
-    user_id: id
+   
   }
   let result = await userStore.createCycling(data)
   console.log('result',result)
@@ -124,12 +125,12 @@ const createRunning = async () =>{
   }
   let result = await userStore.createRunning(message)
   if (result.data.success){
-    dialogue_goal.value = false   
+    addLineItem.value = false   
     toast.add({severity:'success', summary: 'Exercise created', detail:'You have Successfully entered the distance ran', life: 3000});
     running.value = null
   }
   else{
-    dialogue_goal.value = false
+    addLineItem.value = false
     toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
     running.value = null
 

@@ -8,18 +8,16 @@ export default defineEventHandler(async (event)=>{
     const response = {};
     
 
-    const { data:{id,calories,user_id ,proteins,fats} } = await readBody(event);
+    const { data:{id,calories,user_id } } = await readBody(event);
     try {
     
         const updateGoal = await prisma.goal.update({
             where:{
-                id: id
+                id: user_id
             },
             data: {
         
-                fats: fats,
-                proteins: proteins,
-                calories: calories,
+                calories: calories
                 
             }
         });

@@ -10,12 +10,12 @@
                          <span class="p-text-secondary block mb-5">Update your information.</span>
                          <div class="align-items-center gap-3 mb-3">
                              <label for="username" class="font-semibold w-6rem">Calories</label>
-                             <InputText id="username" class="" autocomplete="off" />
+                             <InputText id="username" v-model = "updated_calories" class="" autocomplete="off" />
                          </div>
                          
                          <div class="flex justify-content-end gap-2">
                              <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-                             <Button type="button" label="Save" @click="visible = false"></Button>
+                             <Button type="button" label="Save" @click="createGoal()"></Button>
                          </div>
                </Dialog>
                </div>
@@ -61,14 +61,24 @@
 <script setup lang="ts">
  import { useAuthStore } from '@/stores/auth';
  import {useUserStore} from "~/stores/user"
+ import { useToast } from "primevue/usetoast";
+ const toast = useToast();
  const userStore = useUserStore()
  const authStore = useAuthStore();
+ const id = authStore.id
  const visible = ref(false)
  const totals = ref()
  const total_calories = ref()
  const check_progress = ref('6')
  let food_calories = ref()
 let calculate_progress = ref()
+let distance_ran = ref()
+let distance_cycled = ref()
+let calculated_cycled = ref()
+let calculated_running = ref()
+let basicData = ref()
+let updated_calories = ref()
+let goal_id = ref()
 definePageMeta({ 
        middleware: ["auth"]
    });
@@ -78,12 +88,38 @@ definePageMeta({
    await userStore.getGoal().then((data)=>{
    total_calories.value = data.data.goal[0].calories
   })
+  await userStore.getGoal().then((data)=>{
+    goal_id.value = data.data.goal[0].id
+   })
+  await userStore.getExerciseResult().then((data)=>{
+    distance_cycled.value = data.data.distanceCycled
+    distance_ran.value = data.data.distanceRan
+  })
    totals.value = calculateTotals(result)
    food_calories.value = Number(totals.value.totalcalories)
    calculate_progress.value = ((food_calories.value/ Number(total_calories.value))*100).toFixed(0)
    chartData.value = setChartData();
    chartOptions.value = setChartOptions();
+   getDistances_cy()  
+   getDistances_ran()
+
    
+  basicData.value =  {
+        labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sarturday'],
+        datasets: [
+            {
+                label: 'Running',
+                backgroundColor: '#42A5F5',
+                data: calculated_running.value
+            },
+            {
+                label: 'Cycling',
+                backgroundColor: '#9CCC65',
+                data: calculated_cycled.value
+            }
+        ]
+    }
+    
    
    })
 const chartData = ref();
@@ -128,21 +164,6 @@ const setChartOptions = () => {
    };
 };
 
-const basicData =  {
-        labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sarturday'],
-        datasets: [
-            {
-                label: 'Running',
-                backgroundColor: '#42A5F5',
-                data: [65, 59, 80, 81, 56, 55, 40,60]
-            },
-            {
-                label: 'Cycling',
-                backgroundColor: '#9CCC65',
-                data: [28, 48, 40, 19, 86, 27, 90,70]
-            }
-        ]
-    }
 function calculateTotals(data) {
  let totalFats = 0;
  let totalCarbs = 0;
@@ -168,6 +189,39 @@ const formating_to_decimal_place = (value)=>{
   return value.toFixed(2)
 }
 
+const getDistances_cy= ()=> {
+   calculated_cycled.value = distance_cycled.value.map((item) => item.distance);
+  return calculated_cycled.value
+}
+const getDistances_ran= ()=> {
+   calculated_running.value = distance_ran.value.map((item) => item.distance);
+  return calculated_running.value
+}
+
+const createGoal = async () =>{
+  let message = {
+    user_id: goal_id.value,
+    calories: updated_calories.value
+  }
+  let result = await userStore.updateGoal(message)
+  if (result.data.success){
+    updated_calories.value = null
+    await userStore.getGoal().then((data)=>{
+    total_calories.value = data.data.goal[0].calories
+   })
+   calculate_progress.value = ((food_calories.value/ Number(total_calories.value))*100).toFixed(0)
+   toast.add({severity:'success', summary: 'Goal Updated', detail:'You have Successfully updated your goal', life: 3000});
+    
+    visible.value = false  
+    
+  }
+  else{
+    visible.value = false
+    toast.add({severity:'warn', summary: 'Error!', detail:'Creation Failed', life: 3000});
+    updated_calories.value = null
+
+  }
+}
 
 </script>
 <style>

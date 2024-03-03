@@ -5,7 +5,7 @@
         <img width="80" src="/images/finalRev.jpg" alt="logo" style="margin-top: 10%; margin-bottom: 5px;padding-leftt: -10px;">
       </div>
       <nav  class="sidebar-nav">
-       
+        <PanelMenu   :model="officer_menus"/>
         <PanelMenu   :model="admin_menus"/>
         <PanelMenu :model="insurer_menus"/>
         <hr>
@@ -87,22 +87,10 @@
   const officer_menus = ref([
       {
           key: '1',
-          label: 'Originator Menu',
+          label: 'Dashboard',
           icon: 'pi pi-fw pi-align-justify',
-          items: [{
-                  key: '1_0',
-                  label: 'Report Generation',
-                  icon: 'pi pi-fw pi-chart-pie',
-                  to: '/officer/generate'
-              },
-              {
-                  key: '1_1',
-                  label: 'My Reports',
-                  icon: 'pi pi-fw pi-clone',
-                  to: '/officer/reports'
-              }
-          ]
-      },
+          to: '/'
+      }
       
   ]);
   const bank_menus = ref([

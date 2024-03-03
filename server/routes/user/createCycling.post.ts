@@ -8,17 +8,14 @@ export default defineEventHandler(async (event)=>{
     const response = {};
     
 
-    const { data:{user_id,cycling} } = await readBody(event);
+    const { data:{user_id, cyclying} } = await readBody(event);
     try {
     
         const createMeal = await prisma.cycling.create({
             data: {
                 user_id: user_id,
-                distance: parseFloat(cycling),
-                
-                
-                
-                
+                distance: parseFloat(cyclying),
+           
             }
         });
         response['registered'] = createMeal
